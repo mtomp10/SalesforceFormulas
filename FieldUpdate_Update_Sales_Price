@@ -1,1 +1,1 @@
-IF( ISPICKVAL( Product2.Product_Category__c , "Digital")  &&  Quantity > 1000 &&  NOT(ISPICKVAL(Product2.Type__c, "Leads")) ,  Cost_placeholder__c - Calculated_Discount_Amount__c , (Cost_placeholder__c * Quantity) - Calculated_Discount_Amount__c)
+Cost_placeholder__c - Calculated_Discount_Amount__c
