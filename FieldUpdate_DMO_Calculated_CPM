@@ -1,0 +1,12 @@
+IF(PricebookEntry.Product2.Package_Product__c = FALSE, 
+
+IF(Quantity < Product2.T1_Imp__c , Product2.T1_CPM__c , 
+IF(Quantity > Product2.T1_Imp__c && Quantity <= Product2.T2_Imp__c, Product2.T2_CPM__c , 
+IF(Quantity > Product2.T2_Imp__c && Quantity <= Product2.T3_Imp__c, Product2.T3_CPM__c , 
+IF(Quantity > Product2.T3_Imp__c && Quantity <= Product2.T4_Imp__c, Product2.T4_CPM__c ,Product2.T5_CPM__c)))), 
+IF( ISPICKVAL(Status__c,"Closed Won"), Calculated_CPM__c , 
+
+IF(Opportunity.Packaged_Impressions__c + Quantity < Product2.T1_Imp__c , Product2.T1_CPM__c , 
+IF(Opportunity.Packaged_Impressions__c + Quantity > Product2.T1_Imp__c && Opportunity.Packaged_Impressions__c + Quantity <= Product2.T2_Imp__c, Product2.T2_CPM__c , 
+IF(Opportunity.Packaged_Impressions__c + Quantity > Product2.T2_Imp__c && Opportunity.Packaged_Impressions__c + Quantity <= Product2.T3_Imp__c, Product2.T3_CPM__c , 
+IF(Opportunity.Packaged_Impressions__c + Quantity > Product2.T3_Imp__c && Opportunity.Packaged_Impressions__c + Quantity <= Product2.T4_Imp__c, Product2.T4_CPM__c ,Product2.T5_CPM__c))))))
