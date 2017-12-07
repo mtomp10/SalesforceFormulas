@@ -1,16 +1,13 @@
 IF(PricebookEntry.Product2.Calc_CPM__c = TRUE, 
 
-IF(NOT(ISPICKVAL(Opportunity.StageName, "Closed Won" ) || Opportunity.Contract_Modification__c = FALSE), 
-IF(Packaged_Product__c = TRUE, 
-(IF(Opportunity.Packaged_Impressions__c < Product2.T1_Imp__c , Product2.T1_CPM__c , 
-IF(Opportunity.Packaged_Impressions__c > Product2.T1_Imp__c && Opportunity.Packaged_Impressions__c <= Product2.T2_Imp__c, Product2.T2_CPM__c , 
-IF(Opportunity.Packaged_Impressions__c > Product2.T2_Imp__c && Opportunity.Packaged_Impressions__c <= Product2.T3_Imp__c, Product2.T3_CPM__c , 
-IF(Opportunity.Packaged_Impressions__c > Product2.T3_Imp__c && Opportunity.Packaged_Impressions__c <= Product2.T4_Imp__c, Product2.T4_CPM__c , IF(ISBLANK(Product2.T5_CPM__c), Product2.T4_CPM__c, Product2.T5_CPM__c))))) * Quantity )/1000, 
+IF( Product2.Package_Product__c = TRUE, 
 
-(IF(Quantity < Product2.T1_Imp__c , Product2.T1_CPM__c , 
-IF(Quantity > Product2.T1_Imp__c && Quantity <= Product2.T2_Imp__c, Product2.T2_CPM__c , 
-IF(Quantity > Product2.T2_Imp__c && Quantity <= Product2.T3_Imp__c, Product2.T3_CPM__c , 
-IF(Quantity > Product2.T3_Imp__c && Quantity <= Product2.T4_Imp__c, Product2.T4_CPM__c , 
-IF(ISBLANK(Product2.T5_CPM__c), Product2.T4_CPM__c, Product2.T5_CPM__c))))) * Quantity )/1000), 
-(Calculated_CPM__c /1000)* Quantity ) 
-, UnitPrice)
+IF( ISPICKVAL(Status__c,"Closed Won"),(Calculated_CPM__c * Opportunity.Packaged_Impressions__c )/1000, 
+
+(IF(Opportunity.Packaged_Impressions__c + Opportunity.End_User_Account__r.Purchased_Impressions_This_Year__c < Product2.T1_Imp__c , Product2.T1_CPM__c, 
+IF(Opportunity.Packaged_Impressions__c + Opportunity.End_User_Account__r.Purchased_Impressions_This_Year__c > Product2.T1_Imp__c && Opportunity.Packaged_Impressions__c + Opportunity.End_User_Account__r.Purchased_Impressions_This_Year__c <= Product2.T2_Imp__c, Product2.T2_CPM__c , 
+IF(Opportunity.Packaged_Impressions__c + Opportunity.End_User_Account__r.Purchased_Impressions_This_Year__c > Product2.T2_Imp__c && Opportunity.Packaged_Impressions__c + Opportunity.End_User_Account__r.Purchased_Impressions_This_Year__c <= Product2.T3_Imp__c, Product2.T3_CPM__c , 
+IF(Opportunity.Packaged_Impressions__c + Opportunity.End_User_Account__r.Purchased_Impressions_This_Year__c > Product2.T3_Imp__c && Opportunity.Packaged_Impressions__c + Opportunity.End_User_Account__r.Purchased_Impressions_This_Year__c <= Product2.T4_Imp__c, Product2.T4_CPM__c ,Product2.T5_CPM__c))))* Quantity/1000)), 
+
+(Calculated_CPM__c * Quantity)/1000), 
+UnitPrice * Quantity)
